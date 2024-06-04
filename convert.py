@@ -10,12 +10,13 @@ import re
 import traceback
 from xml.etree import ElementTree
 
-OUTPUT_DIR = os.path.join(os.path.expanduser('~'), "Desktop", "OneNoteExport")
+# OUTPUT_DIR = os.path.join(os.path.expanduser("~"), "Desktop", "OneNoteExport")
+OUTPUT_DIR = r"C:\code\diff-onenote-export"
 ASSETS_DIR = "assets"
 PROCESS_RECYCLE_BIN = False
 LOGFILE = 'onenote_to_markdown.log' # Set to None to disable logging
 # For debugging purposes, set this variable to limit which pages are exported:
-LIMIT_EXPORT = r'' # example: YourNotebook\Notes limits it to the Notes tab/page
+LIMIT_EXPORT = r'Exportable\Section1' # example: YourNotebook\Notes limits it to the Notes tab/page
 
 def log(message):
     print(message)
@@ -68,7 +69,7 @@ def fix_image_names(md_path, image_names):
     shutil.move(tmp_path, md_path)
 
 def handle_page(onenote, elem, path, i):
-    safe_name = safe_str("%s_%s" % (str(i).zfill(3), elem.attrib['name']))
+    safe_name = safe_str(elem.attrib['name'])
     if not should_handle(os.path.join(path, safe_name)):
         return
 
